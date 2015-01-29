@@ -29,7 +29,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/AdRoll/goamz/aws"
+	"github.com/upflare/goamz/aws"
 )
 
 const debug = false
@@ -70,6 +70,7 @@ type Options struct {
 	ContentMD5           string
 	ContentDisposition   string
 	Range                string
+    StorageClass         string
 	// What else?
 	//// The following become headers so they are []strings rather than strings... I think
 	// x-amz-storage-class []string
@@ -96,7 +97,7 @@ var attempts = aws.AttemptStrategy{
 
 // New creates a new S3.
 func New(auth aws.Auth, region aws.Region) *S3 {
-	return &S3{auth, region, 0, 0, 0, aws.V2Signature}
+	return &S3{auth, region, 0, 0, 0, aws.V4Signature}
 }
 
 // Bucket returns a Bucket with the given name.
@@ -401,6 +402,9 @@ func (o Options) addHeaders(headers map[string][]string) {
 	if len(o.ContentDisposition) != 0 {
 		headers["Content-Disposition"] = []string{o.ContentDisposition}
 	}
+    if len(o.StorageClass) != 0 {
+        headers["x-amz-storage-class"] = []string{o.StorageClass}
+    }
 	for k, v := range o.Meta {
 		headers["x-amz-meta-"+k] = v
 	}

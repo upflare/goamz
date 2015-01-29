@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/xml"
 	"fmt"
-	"github.com/AdRoll/goamz/aws"
+	"github.com/upflare/goamz/aws"
 	"io"
 	"net/http"
 	"strconv"

@@ -3,7 +3,7 @@ package dynamodb
 import (
 	"encoding/json"
 	"errors"
-	"github.com/AdRoll/goamz/dynamodb/dynamizer"
+	"github.com/upflare/goamz/dynamodb/dynamizer"
 )
 
 type DynamoQuery struct {
